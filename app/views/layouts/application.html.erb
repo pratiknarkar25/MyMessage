@@ -1,14 +1,30 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>MyMessage</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
-	<p class="notice"><%= notice %></p>
-	<p class="alert"><%= alert %></p>
-	<%= yield %>
-</body>
+	<head>
+	  <title>MyMessage</title>
+	  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+	  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+	  <%= csrf_meta_tags %>
+	</head>
+	<body class="siteMargin">
+		<% if notice.present? %>	
+			<p class="alert alert-success"><%= notice %></p>
+		<% end %>
+		<% if alert.present? %>	
+			<p class="alert alert-warning"><%= alert %></p>
+		<% end %>
+		<ul class="nav nav-pills">
+		  <% if user_signed_in? %>
+        <li><%= link_to "Home", root_path %></li>
+        <li><%= link_to "Messages", messages_path %></li>
+		    <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+		  <% else %>
+		    <li><%= link_to "Sign in", new_user_session_path %></li>
+		    <li><%= link_to "Sign up", new_user_registration_path %></li>
+		  <% end %>
+		</ul>
+		<%= yield %>
+	</body>
 </html>
+
+
