@@ -5,4 +5,5 @@ class Message < ActiveRecord::Base
   validates :recipient_id, presence: true
   validates :subject, presence: true
   validates :body, presence: true
+  validates :money, numericality: true
 end

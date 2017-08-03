@@ -1,5 +1,6 @@
 class MessagesController < ApplicationController
   before_action :set_message, only: [:show, :edit, :update, :destroy]
+  before_action :message_read, only: [:edit, :destroy]
 
   # GET /messages
   # GET /messages.json
@@ -10,6 +11,7 @@ class MessagesController < ApplicationController
   # GET /messages/1
   # GET /messages/1.json
   def show
+    @message.update_attribute(:read, true) if @message.recipient_id == current_user.id
   end
 
   # GET /messages/new
@@ -71,4 +73,9 @@ class MessagesController < ApplicationController
     def message_params
       params.require(:message).permit(:subject, :body, :sender_id, :recipient_id, :read, :money)
     end
+
+    def message_read
+      redirect_to messages_path, :notice => "Message is already read by receiver" if @message.read
+    end
+      
 end

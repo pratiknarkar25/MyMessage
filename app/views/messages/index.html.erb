@@ -1,36 +1,6 @@
-<h1>Listing Messages</h1>
-
-<table class="table table-responsive table-hover">
-  <thead>
-    <tr>
-      <th>Subject</th>
-      <th>Body</th>
-      <th>Sender</th>
-      <th>Recipient</ th>
-      <th>Read</th>
-      <th>Money</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @messages.each do |message| %>
-      <% read_class = (message.read == false ? 'bold' : 'normal') %>
-      <tr class="#{read_class}">
-        <td><%= message.subject %></td>
-        <td><%= message.body %></td>
-        <td><%= message.sender.email %></td>
-        <td><%= message.recipient.email %></td>
-        <td><%= message.read %></td>
-        <td><%= message.money %></td>
-        <td><%= link_to 'Show', message %></td>
-        <td><%= link_to 'Edit', edit_message_path(message) %></td>
-        <td><%= link_to 'Destroy', message, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
+<h3>Received Messages/Money: </h3>
+<%= render partial: "messages_list", locals: {messages: list_messages(@messages, false), sent: false} %>
 <br>
-
+<h3>Sent Messages/Money: </h3>
+<%= render partial: "messages_list", locals: {messages: list_messages(@messages, true), sent: true} %>
 <%= link_to 'New Message', new_message_path %>
